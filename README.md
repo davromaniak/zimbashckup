@@ -45,7 +45,7 @@ Backup mailboxes from domain "domain1.tld" using the tgz format and using one fi
 	zimbashckup.sh --domains="domain1.tld" --format=tgz --unite
 
 Backup only mailboxes user1@domain1.tld and user1@domain2.tld with one file by folder using format zip :
-	zimbashckup.sh --mailboxes="user1@domain1.tld and user1@domain2.tld" --format=zip
+	zimbashckup.sh --mailboxes="user1@domain1.tld user1@domain2.tld" --format=zip
 
 License
 -------
