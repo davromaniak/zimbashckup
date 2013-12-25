@@ -26,6 +26,7 @@ Default behavior
 - Without arguments, it will backup all the mailboxes using the tar format with folders in separates tarballs (it launches a "zmmailbox getRestUrl" per folder).
 - Empty folders are ignored and won't be backed up.
 - Empty mailboxes will only have their folder created, but nothing backed up.
+- Shared folders from another account will only be backed up for the owner account. For the others accounts, the folder will be ignored.
 
 Argument/options list
 ---------------------

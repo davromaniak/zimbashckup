@@ -96,16 +96,11 @@ main_zimbashckup() {
 			echoverbose "\_ $mbox"
 			FOLDERSRAW=$($ZMBOX -z -m $mbox getAllFolders | tail -n +4 | awk '{ if($4 > 0){$1=""; $3=""; $4=""; print $0 } }' | sed -e "s/  */ /g" | sed -e "s/^ *//")
 			while read type fname; do
-				#echo $fname
-				if [ "$type" == "appo" ]; then
-					$ZMBOX -z -m $mbox getFolder "$(echo $fname | sed -e "s/ (.*:.*)//")" | grep -q 'ownerDisplayName'
-					ret=$?
-					if [ "$ret" == "0" ]; then
-						FOLDERS=$(echo -ne "${FOLDERS}\n${fname}")
-					fi				
-				else
+				$ZMBOX -z -m $mbox getFolder "$(echo $fname | sed -e "s/ (.*:.*)//")" | grep -q 'ownerDisplayName'
+				ret=$?
+				if [ "$ret" == "0" ]; then
 					FOLDERS=$(echo -ne "${FOLDERS}\n${fname}")
-				fi
+				fi				
 			done < <(echo "$FOLDERSRAW")
 		else
 			FOLDERS="/"
