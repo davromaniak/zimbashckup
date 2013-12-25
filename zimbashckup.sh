@@ -95,13 +95,15 @@ main_zimbashckup() {
 		if [ -z "$UNITE" ]; then
 			echoverbose "\_ $mbox"
 			FOLDERSRAW=$($ZMBOX -z -m $mbox getAllFolders | tail -n +4 | awk '{ if($4 > 0){$1=""; $3=""; $4=""; print $0 } }' | sed -e "s/  */ /g" | sed -e "s/^ *//")
-			while read type fname; do
-				$ZMBOX -z -m $mbox getFolder "$(echo $fname | sed -e "s/ (.*:.*)//")" | grep -q 'ownerDisplayName'
-				ret=$?
-				if [ "$ret" == "0" ]; then
-					FOLDERS=$(echo -ne "${FOLDERS}\n${fname}")
-				fi				
-			done < <(echo "$FOLDERSRAW")
+			if [ $(echo $FOLDERSRAW | wc -c) -gt 1 ]; then
+				while read type fname; do
+					$ZMBOX -z -m $mbox getFolder "$(echo $fname | sed -e "s/ (.*:.*)//")" | grep -q 'ownerDisplayName'
+					ret=$?
+					if [ "$ret" -gt "0" ]; then
+						FOLDERS=$(echo -ne "${FOLDERS}\n${fname}")
+					fi
+				done < <(echo "$FOLDERSRAW")
+			fi
 		else
 			FOLDERS="/"
 			echoverbose "\_ $mbox => $ZDUMPDIR/${mbox}/full.$FORMAT"
