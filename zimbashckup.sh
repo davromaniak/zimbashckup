@@ -1,7 +1,7 @@
 #!/bin/bash
 #  zimbashckup.sh
 #  
-#  Copyright 2013 Cyril Lavier <cyril.lavier@davromaniak.eu>
+#  Copyright 2013 Cyril Lavier <bainisteoir@davromaniak.eu>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
