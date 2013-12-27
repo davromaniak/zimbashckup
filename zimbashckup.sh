@@ -116,6 +116,7 @@ main_zimbashckup() {
 				echoverbose '    \_ '"$folder => $ZDUMPDIR/${mbox}/${filefoldername}.$FORMAT"
 			else
 				folder="$fname"
+				filefoldername="full"
 			fi
 			$ZMBOX -t 600 -z -m $mbox getRestURL "$folder/?fmt=$FORMAT" > "$ZDUMPDIR/${mbox}/${filefoldername}.$FORMAT"
 			ret=$?
@@ -124,6 +125,8 @@ main_zimbashckup() {
 			fi
 			sleep 1
 		done < <(echo "$FOLDERS"  | grep -v "^$")
+		zmprov ga $mbox zimbraMailSieveScript > "$ZDUMPDIR/${mbox}/filters.sieve"
+		echoverbose '    \_ Mail filters (in sieve format)'" => $ZDUMPDIR/${mbox}/filters.sieve"
 		unset FOLDERS FOLDERSRAW
 	done
 	if [ ! -z "$POSTSCRIPT" ]; then

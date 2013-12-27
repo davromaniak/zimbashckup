@@ -27,6 +27,8 @@ Default behavior
 - Empty folders are ignored and won't be backed up.
 - Empty mailboxes will only have their folder created, but nothing backed up.
 - Shared folders from another account will only be backed up for the owner account. For the others accounts, the folder will be ignored.
+- Mail filters are backed up in sieve format
+-- Even if you don't have any filter set in your account, the zimbra tool exports a 2 lines file, I decided not to drop those 2 lines. So the file will always be created.
 
 Argument/options list
 ---------------------
