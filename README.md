@@ -7,8 +7,8 @@ ZimBashckup : Zimbra Backup Script in Bash
 About
 -----
 Simple Bash script for backing up zimbra mailboxes.  
-Inspired by the script zimbraBackupAllAccounts.sh wrote by Richardson Lima and available here : http://wiki.zimbra.com/wiki/Backing_up_and_restoring_Zimbra_%28Open_Source_Version%29#Another_option  
-I modified Richardson's script for personal needs, and I think it could help people, so I decided to distribute it using github.
+Inspired by the script zimbraBackupAllAccounts.sh written by Richardson Lima and available here : http://wiki.zimbra.com/wiki/Backing_up_and_restoring_Zimbra_%28Open_Source_Version%29#Another_option  
+I modified Richardson's script for personal needs, and I think it could help people, so I decided to redistribute it.
 
 Requirements
 ------------
