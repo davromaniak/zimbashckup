@@ -39,6 +39,9 @@ Argument/options list
 - -d[domains]/--domains=[domains] : Backup only mailboxes which belong to this/these domains (each domain separated by a space).
 -- The options -m and -d can't be used alltogether.
 - -f[tar|tgz|zip]/--format=[tar|tgz|zip] : Format used to store backups (this is given to zmmailbox getRestURL command). Default is tar.
+- --dest : Destination folder (defaut is "/opt/zimbra/backups"). Needs to be writable by the zimbra user.
+- -k[number of days]/--keep=[number of days] : Retention time in days
+- -l[locale]/--locale=[locale] : Locale used for the backup process (default is "en_US.UTF-8"). Useful when backing up mailboxes with special characters in their names.
 
 Examples
 --------
@@ -46,8 +49,12 @@ Examples
 Backup mailboxes from domain "domain1.tld" using the tgz format and using one file per mailbox : 
 	zimbashckup.sh --domains="domain1.tld" --format=tgz --unite
 
+
 Backup only mailboxes user1@domain1.tld and user1@domain2.tld with one file by folder using format zip :
 	zimbashckup.sh --mailboxes="user1@domain1.tld user1@domain2.tld" --format=zip
+
+Backup all mailboxes one file by folder using format tgz, use the locale "fr_FR.UTF-8", keep 5 days of backups and put them in /var/backups/zimbra  :
+	zimbashckup.sh --format=tgz --locale="fr_FR.UTF-8" --keep=5 --dest="/var/backups/zimbra"
 
 License
 -------
@@ -61,5 +68,5 @@ Ideas, questions, patches and bug reports
 Send me a mail, and I will answer you, :).
 
 --
-2013 by Cyril Lavier  
+2013-2014 by Cyril Lavier  
 bainisteoir(at)davromaniak(dot)eu

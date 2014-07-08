@@ -1,7 +1,10 @@
-20xx-xx-xx  Cyril Lavier  <bainisteoir(at)davromaniak(dot)eu>
- * Release V0.1.x :
+2014-07-07  Cyril Lavier  <bainisteoir(at)davromaniak(dot)eu>
+ * Release V0.2 :
    + Corrected the filename when doing a united backup.
+   + Fixed the crash when backing up mailboxes with special characters in their names using the --locale argument.
    + Added backup of mail filters in sieve format.
+   + Added retention time in days.
+   + Added the possibility to choose a custom destination folder.
 
 2013-12-25  Cyril Lavier  <bainisteoir(at)davromaniak(dot)eu>
  * Initial Release: V0.1.
