@@ -31,19 +31,20 @@ usage() {
 	echo -e " -f [tar|tgz|zip] | --format=[tar|tgz|zip]\tFormat used to store backups (this is given to zmmailbox getRestURL command). Default is tar"
 	echo -e " -V | --version\t\t\t\t\tDisplay version information."
 	echo -e " -c | --changelog\t\t\t\tDisplay changelog information."
-	echo -e " -h | --help\t\t\t\t\tDisplay this help."
-	echo -e " -l | --locale\t\t\t\t\tChoose the locale used for the backup process (default is \"en_US.UTF-8\")"
-	echo -e "    | --dest\t\t\t\t\tChoose the destination folder (defaut is \"/opt/zimbra/backups\"). Needs to be writable by the zimbra user"
+	echo -e " -l | --locale\t\t\t\t\tLocale used for the backup process (default is \"en_US.UTF-8\"). Useful when backing up mailboxes with special characters in their names"
+	echo -e "    | --dest\t\t\t\t\tDestination folder (defaut is \"/opt/zimbra/backups\"). Needs to be writable by the zimbra user"
 	echo -e " -k | --keep\t\t\t\t\tRetention time in days"
+	echo -e " -h | --help\t\t\t\t\tDisplay this help."
 }
 
 changelog() {
+	echo "V0.2: July 8th 2014 : Added destination folder, retention time and locale"
 	echo "V0.1: December 25th 2013 : First release"
 	echo "See the CHANGELOG for more information"
 }
 
 version() {
-	echo "ZimBashckUP V0.1"
+	echo "ZimBashckUP V0.2"
 	echo "Written by Cyril Lavier <bainisteoir(at)davromaniak(dot)eu>"
 }
 
