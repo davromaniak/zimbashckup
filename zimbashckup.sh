@@ -32,6 +32,7 @@ usage() {
 	echo -e " -V | --version\t\t\t\t\tDisplay version information."
 	echo -e " -c | --changelog\t\t\t\tDisplay changelog information."
 	echo -e " -h | --help\t\t\t\t\tDisplay this help."
+	echo -e " -l | --locale\t\t\t\t\tChoose the locale used for the backup process (default is \"en_US.UTF-8\")"
 }
 
 changelog() {
@@ -78,6 +79,12 @@ main_zimbashckup() {
 	DATE=$(date +%Y/%m/%d)
 	ZDUMPDIR=$ZBACKUP/$DATE
 	ZMBOX=/opt/zimbra/bin/zmmailbox
+	if [ -z "$LOCALE" ]; then
+		LOCALE="en_US.UTF-8"
+	fi
+	echo "Locale : $LOCALE"
+	export LANG=$LOCALE
+	export LC_ALL=$LOCALE
 	if [ -z "$FORMAT" ]; then
 		FORMAT="tar"
 	fi
@@ -139,13 +146,13 @@ export -f main_zimbashckup
 case "$(id -nu)" in
 	root)
 		echo $0 |grep -qE "^/" && progname=$0 || progname=$PWD/$0
-		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help" "vup:m:d:f:Vch" "$@"`
+		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale:" "vup:m:d:f:Vchl:" "$@"`
 		args="$@"
 		su - zimbra --command="FROMROOT=1 $progname ${args}"
 		;;
 	zimbra)
 		if [ -z "$FROMROOT" ]; then
-			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help" "vup:m:d:f:Vch" "$@"`
+			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale:" "vup:m:d:f:Vchl:" "$@"`
 		fi
 		while [ $# -gt 0 ]; do
 			case "$1" in
@@ -169,6 +176,11 @@ case "$(id -nu)" in
 					;;
 				-p|--postscript)
 					POSTSCRIPT="$2"
+					shift
+					;;
+				-l|--locale)
+					LOCALE="$2"
+					echo $2
 					shift
 					;;
 				-m|--mailboxes)
