@@ -33,6 +33,7 @@ usage() {
 	echo -e " -c | --changelog\t\t\t\tDisplay changelog information."
 	echo -e " -h | --help\t\t\t\t\tDisplay this help."
 	echo -e " -l | --locale\t\t\t\t\tChoose the locale used for the backup process (default is \"en_US.UTF-8\")"
+	echo -e "    | --dest\t\t\t\t\tChoose the destination folder (defaut is \"/opt/zimbra/backups\"). Needs to be writable by the zimbra user"
 }
 
 changelog() {
@@ -74,10 +75,8 @@ checkrequirements() {
 
 main_zimbashckup() {
 	ZHOME=/opt/zimbra
-	ZBACKUP=$ZHOME/backup/mailbox
 	ZCONFD=$ZHOME/conf
 	DATE=$(date +%Y/%m/%d)
-	ZDUMPDIR=$ZBACKUP/$DATE
 	ZMBOX=/opt/zimbra/bin/zmmailbox
 	if [ -z "$LOCALE" ]; then
 		LOCALE="en_US.UTF-8"
@@ -88,6 +87,12 @@ main_zimbashckup() {
 	if [ -z "$FORMAT" ]; then
 		FORMAT="tar"
 	fi
+	if [ -z "$DEST" ]; then
+		ZBACKUP=$ZHOME/backup/mailbox
+	else
+		ZBACKUP=$DEST
+	fi
+	ZDUMPDIR=$ZBACKUP/$DATE
 	if [ -z "$MBOXES" ] && [ -z "$DOMAINS" ]; then
 		MBOXES=$(zmprov -l gaa)
 	elif [ ! -z "$DOMAINS" ]; then
@@ -146,13 +151,13 @@ export -f main_zimbashckup
 case "$(id -nu)" in
 	root)
 		echo $0 |grep -qE "^/" && progname=$0 || progname=$PWD/$0
-		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale:" "vup:m:d:f:Vchl:" "$@"`
+		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest:" "vup:m:d:f:Vchl: " "$@"`
 		args="$@"
 		su - zimbra --command="FROMROOT=1 $progname ${args}"
 		;;
 	zimbra)
 		if [ -z "$FROMROOT" ]; then
-			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale:" "vup:m:d:f:Vchl:" "$@"`
+			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest:" "vup:m:d:f:Vchl: " "$@"`
 		fi
 		while [ $# -gt 0 ]; do
 			case "$1" in
@@ -181,6 +186,15 @@ case "$(id -nu)" in
 				-l|--locale)
 					LOCALE="$2"
 					echo $2
+					shift
+					;;
+				--dest)
+					test -w $2
+					if [ $? -eq "1" ]; then
+						echoerror "Directory $2 doesn't exists or is not writable by the zimbra user"
+						exit 13
+					fi
+					DEST="$2"
 					shift
 					;;
 				-m|--mailboxes)
