@@ -34,6 +34,7 @@ usage() {
 	echo -e " -h | --help\t\t\t\t\tDisplay this help."
 	echo -e " -l | --locale\t\t\t\t\tChoose the locale used for the backup process (default is \"en_US.UTF-8\")"
 	echo -e "    | --dest\t\t\t\t\tChoose the destination folder (defaut is \"/opt/zimbra/backups\"). Needs to be writable by the zimbra user"
+	echo -e " -k | --keep\t\t\t\t\tRetention time in days"
 }
 
 changelog() {
@@ -81,7 +82,6 @@ main_zimbashckup() {
 	if [ -z "$LOCALE" ]; then
 		LOCALE="en_US.UTF-8"
 	fi
-	echo "Locale : $LOCALE"
 	export LANG=$LOCALE
 	export LC_ALL=$LOCALE
 	if [ -z "$FORMAT" ]; then
@@ -144,6 +144,10 @@ main_zimbashckup() {
 	if [ ! -z "$POSTSCRIPT" ]; then
 		exec $POSTSCRIPT
 	fi
+	if [ ! -z "$KEEP" ]; then
+		find $ZBACKUP -mtime +$KEEP -type f -regextype posix-egrep -regex '^.*\.(sieve|zip|tar|tgz)$'
+		find $ZBACKUP -mindepth 2 -type d -empty -delete
+	fi
 }
 
 export -f main_zimbashckup
@@ -151,13 +155,13 @@ export -f main_zimbashckup
 case "$(id -nu)" in
 	root)
 		echo $0 |grep -qE "^/" && progname=$0 || progname=$PWD/$0
-		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest:" "vup:m:d:f:Vchl: " "$@"`
+		set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest: keep:" "vup:m:d:f:Vchl: k:" "$@"`
 		args="$@"
 		su - zimbra --command="FROMROOT=1 $progname ${args}"
 		;;
 	zimbra)
 		if [ -z "$FROMROOT" ]; then
-			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest:" "vup:m:d:f:Vchl: " "$@"`
+			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest: keep:" "vup:m:d:f:Vchl: k:"$@"`
 		fi
 		while [ $# -gt 0 ]; do
 			case "$1" in
@@ -195,6 +199,10 @@ case "$(id -nu)" in
 						exit 13
 					fi
 					DEST="$2"
+					shift
+					;;
+				-k|--keep)
+					KEEP="$2"
 					shift
 					;;
 				-m|--mailboxes)
