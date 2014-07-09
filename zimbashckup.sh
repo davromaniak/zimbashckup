@@ -146,7 +146,7 @@ main_zimbashckup() {
 		exec $POSTSCRIPT
 	fi
 	if [ ! -z "$KEEP" ]; then
-		find $ZBACKUP -mtime +$KEEP -type f -regextype posix-egrep -regex '^.*\.(sieve|zip|tar|tgz)$'
+		find $ZBACKUP -mtime +$KEEP -type f -regextype posix-egrep -regex '^.*\.(sieve|zip|tar|tgz)$' -delete
 		find $ZBACKUP -mindepth 2 -type d -empty -delete
 	fi
 }
