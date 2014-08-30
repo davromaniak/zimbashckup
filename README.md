@@ -15,7 +15,7 @@ Requirements
 - bash
 - gawk
 - date
-- Zimbra Collaboration Suite (only tested on the Open Source Edition v8.0.6)
+- Zimbra Collaboration Suite (tested on the Open Source Edition v8.0.6, 8.0.7 and 8.5.0)
 
 Installation
 ------------
@@ -68,5 +68,5 @@ Ideas, questions, patches and bug reports
 Send me a mail, and I will answer you, :).
 
 --
-2013-2014 by Cyril Lavier  
+2013-2014 by Cyril Lavier
 bainisteoir(at)davromaniak(dot)eu
