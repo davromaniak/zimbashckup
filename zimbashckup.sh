@@ -162,7 +162,7 @@ case "$(id -nu)" in
 		;;
 	zimbra)
 		if [ -z "$FROMROOT" ]; then
-			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest: keep:" "vup:m:d:f:Vchl: k:"$@"`
+			set -- `getopt -n$0 -u --longoptions="verbose unite postscript: mailboxes: domains: format: version changelog help locale: dest: keep:" "vup:m:d:f:Vchl: k:" "$@"`
 		fi
 		while [ $# -gt 0 ]; do
 			case "$1" in
