@@ -56,6 +56,16 @@ Backup only mailboxes user1@domain1.tld and user1@domain2.tld with one file by f
 Backup all mailboxes one file by folder using format tgz, use the locale "fr_FR.UTF-8", keep 5 days of backups and put them in /var/backups/zimbra  :
 	zimbashckup.sh --format=tgz --locale="fr_FR.UTF-8" --keep=5 --dest="/var/backups/zimbra"
 
+Restoring Backups
+-----------------
+For now, Zimbashckup doesn't do mailbox restore.
+
+For the restore process, it has to be performed with the zmmailbox tool (http://wiki.zimbra.com/wiki/Zmmailbox) with the postRestURL command.
+
+Something like `/opt/zimbra/bin/zmmailbox -z -m user@domain.com -t 0 postRestURL "//?fmt=tgz&resolve=reset" account.tgz` should work, but be carefull (mostly with the resolve parameter, when set to "reset", it will empty the destination mailbox and replace it with the TGZ dump.
+
+If you can work with a test zimbra, don't hesitate to test it, I've done a lot of mistakes when testing.
+
 License
 -------
 Zimbashckup is distributed under the terms of the GNU General Public  
