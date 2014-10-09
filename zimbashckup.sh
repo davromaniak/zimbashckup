@@ -78,7 +78,7 @@ checkrequirements() {
 main_zimbashckup() {
 	ZHOME=/opt/zimbra
 	ZCONFD=$ZHOME/conf
-	DATE=$(date +%Y/%m/%d)
+	DATE=$(date +%Y-%m-%d)
 	ZMBOX=/opt/zimbra/bin/zmmailbox
 	if [ -z "$LOCALE" ]; then
 		LOCALE="en_US.UTF-8"
@@ -131,6 +131,8 @@ main_zimbashckup() {
 				folder="$fname"
 				filefoldername="full"
 			fi
+			$ZMBOX -t 600 -z -m $mbox getRestURL "Junk/?fmt=$FORMAT" > "$ZDUMPDIR/${mbox}/${mbox}-trash.$FORMAT"
+                        $ZMBOX -t 600 -z -m $mbox getRestURL "Trash/?fmt=$FORMAT" > "$ZDUMPDIR/${mbox}/${mbox}-trash.$FORMAT"
 			$ZMBOX -t 600 -z -m $mbox getRestURL "$folder/?fmt=$FORMAT" > "$ZDUMPDIR/${mbox}/${filefoldername}.$FORMAT"
 			ret=$?
 			if [ "$ret" -gt "0" ]; then
