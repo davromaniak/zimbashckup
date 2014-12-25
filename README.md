@@ -15,7 +15,7 @@ Requirements
 - bash
 - gawk
 - date
-- Zimbra Collaboration Suite (tested on the Open Source Edition v8.0.6, 8.0.7 and 8.5.0)
+- Zimbra Collaboration Suite (tested on the Open Source Edition v8.0.6, 8.0.7, 8.5.0 and 8.6.0 on Ubuntu 12.04 and 14.04)
 
 Installation
 ------------
