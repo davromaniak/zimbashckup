@@ -1,3 +1,8 @@
+2014-10-09  Daniel Beato  <danielbea(at)gmail(dot)com>
+ * Release V0.3
+   + Changed Folder creation from +%Y/%m/%d to +%Y-%m-%d
+   + Added Junk and Trash backup of mailboxes
+
 2014-07-07  Cyril Lavier  <bainisteoir(at)davromaniak(dot)eu>
  * Release V0.2 :
    + Corrected the filename when doing a united backup.
